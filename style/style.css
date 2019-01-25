@@ -1,0 +1,9 @@
+form {
+    width: 640px;
+}
+
+.error {
+    position: absolute;
+    font-size: 12px;
+    color: #d9534f;
+}
