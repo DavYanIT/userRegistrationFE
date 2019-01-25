@@ -6,8 +6,6 @@ import MainPage from './components/main_page';
 import Register from './components/register';
 import Login from './components/login';
 
-const user = localStorage.getItem('user');
-
 export default (
     <Route path="/" component={App}>
         {/* {user ?
