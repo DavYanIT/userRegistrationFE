@@ -8,4 +8,4 @@ export default ({input, label, type, meta: {touched, error}}) => (
             {touched && error && <span className="error">{error}</span>}
         </div>
     </div>
-)
+);

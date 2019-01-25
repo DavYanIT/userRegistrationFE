@@ -14,16 +14,14 @@ class Login extends Component {
         }
     }
     onSubmit(data) {
-        this.props.login(data).then((result) => {
-            console.log(result)
-            if (result.data && result.data.error) {
-                console.log(result.data.error)
-                result.data.error=='wrongPass' ?
+        this.props.login(data).then(({payload}) => {
+            if (payload.data.error) {
+                payload.data.error=='wrongPass' ?
                     this.setState({error: 'Wrong Password'}) :
-                        result.data.error=='doesNotExist' ?
+                    payload.data.error=='doesNotExist' ?
                         this.setState({error: 'Wrong Email'}) :
-                        this.setState({error: 'Something went wrong'})
-            } else if (result.data && result.data.user) {
+                        this.setState({error: 'Something went wrong'});
+            } else if (payload.data.user) {
                 browserHistory.push('/');
             }
         });

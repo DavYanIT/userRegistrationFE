@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Field, reduxForm, SubmissionError } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import { Link, browserHistory } from 'react-router';
 import { register } from '../actions/index';
-import { connect } from 'react-redux';
 import renderField from './render_field';
 
 class Register extends Component {
@@ -16,11 +15,11 @@ class Register extends Component {
 
     onSubmit(data) {
         register(data).payload.then((result) => {
-            if (result.data && result.data.error) {
-                if (result.data.error=='alreadyExists') {
-                    this.setState({error: 'This email is already used'});
-                }
-            } else if (result.data) {
+            if (result.data.error) {
+                result.data.error=='alreadyExists' ? 
+                    this.setState({error: 'This email is already used'}) :
+                    this.setState({error: 'Something went wrong'});
+            } else if (result.data.user) {
                 browserHistory.push("/login");
             }
         });
@@ -55,6 +54,7 @@ const validate = ({firstName, lastName, email, password}) => {
     return errors;
 }
 
-export default connect(state=>({reg: state.user}), {register})(reduxForm({
-    form: 'RegisterForm'
-})(Register));
+export default reduxForm({
+    form: 'RegisterForm',
+    validate
+})(Register);

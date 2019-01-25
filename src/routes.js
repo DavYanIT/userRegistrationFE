@@ -6,12 +6,10 @@ import MainPage from './components/main_page';
 import Register from './components/register';
 import Login from './components/login';
 
-const routes = () => (
+export default (
     <Route path="/" component={App}>
         <IndexRoute component={MainPage} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
     </Route>
 );
-
-export default routes
