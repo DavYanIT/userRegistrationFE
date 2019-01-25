@@ -3,6 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Link, browserHistory } from 'react-router';
 import { register } from '../actions/index';
 import renderField from './render_field';
+import errorTypes from '../constants/error_types';
 
 class Register extends Component {
     constructor() {
@@ -16,7 +17,7 @@ class Register extends Component {
     onSubmit(data) {
         register(data).payload.then((result) => {
             if (result.data.error) {
-                result.data.error=='alreadyExists' ? 
+                result.data.error==errorTypes.alreadyExists ? 
                     this.setState({error: 'This email is already used'}) :
                     this.setState({error: 'Something went wrong'});
             } else if (result.data.user) {

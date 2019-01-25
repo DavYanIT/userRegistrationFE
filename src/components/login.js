@@ -4,6 +4,7 @@ import { Link, browserHistory } from 'react-router';
 import { login } from '../actions/index';
 import { connect } from 'react-redux';
 import renderField from './render_field';
+import errorTypes from '../constants/error_types';
 
 class Login extends Component {
     constructor() {
@@ -16,9 +17,9 @@ class Login extends Component {
     onSubmit(data) {
         this.props.login(data).then(({payload}) => {
             if (payload.data.error) {
-                payload.data.error=='wrongPass' ?
+                payload.data.error==errorTypes.wrongPass ?
                     this.setState({error: 'Wrong Password'}) :
-                    payload.data.error=='doesNotExist' ?
+                    payload.data.error==errorTypes.doesNotExist ?
                         this.setState({error: 'Wrong Email'}) :
                         this.setState({error: 'Something went wrong'});
             } else if (payload.data.user) {
