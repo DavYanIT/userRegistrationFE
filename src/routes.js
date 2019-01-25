@@ -1,20 +1,17 @@
 import React from 'react';
-import { Route, IndexRoute, Re } from 'react-router';
+import { Route, IndexRoute } from 'react-router';
 
 import App from './components/app';
 import MainPage from './components/main_page';
 import Register from './components/register';
 import Login from './components/login';
 
-export default (
+const routes = () => (
     <Route path="/" component={App}>
-        {/* {user ?
-            <IndexRoute component={MainPage} /> : */}
-            <div>
-                <IndexRoute component={Login} />
-                <Route path="/login" component={Login} />
-                <Route path="/register" component={Register} />
-            </div>
-        {/* } */}
+        <IndexRoute component={MainPage} />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
     </Route>
 );
+
+export default routes

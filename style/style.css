@@ -3,7 +3,10 @@ form {
 }
 
 .error {
+    color: #d9534f;
+}
+
+span.error {
     position: absolute;
     font-size: 12px;
-    color: #d9534f;
 }

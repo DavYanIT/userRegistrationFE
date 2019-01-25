@@ -6,13 +6,26 @@ import { connect } from 'react-redux';
 import renderField from './render_field';
 
 class Login extends Component {
+    constructor() {
+        super()
+
+        this.state = {
+            error: null
+        }
+    }
     onSubmit(data) {
-        this.props.login(data).then((v) => {
-            console.log(v)
-            localStorage.setItem('user', data)
-            browserHistory.push('/');
-        }).catch((err) => {
-            console.log(err, 'err')
+        this.props.login(data).then((result) => {
+            console.log(result)
+            if (result.data && result.data.error) {
+                console.log(result.data.error)
+                result.data.error=='wrongPass' ?
+                    this.setState({error: 'Wrong Password'}) :
+                        result.data.error=='doesNotExist' ?
+                        this.setState({error: 'Wrong Email'}) :
+                        this.setState({error: 'Something went wrong'})
+            } else if (result.data && result.data.user) {
+                browserHistory.push('/');
+            }
         });
     }
 
@@ -20,7 +33,8 @@ class Login extends Component {
         return (
             <form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}>
                 <h3>Login</h3>
-                <Field component={renderField} name="email" type="text" label="Email" />
+                {this.state.error ? <p className="error">{this.state.error}</p> : ''}
+                <Field component={renderField} name="email" type="email" label="Email" />
                 <Field component={renderField} name="password" type="password" label="Password" />
                 <button type="submit" className="btn btn-primary">Login</button>
                 <Link to="/register" className="btn btn-danger">Register</Link>
@@ -39,5 +53,6 @@ const validate = ({email, password}) => {
 }
 
 export default connect(null, {login})(reduxForm({
-    form: 'LoginForm'
+    form: 'LoginForm',
+    validate
 })(Login))
